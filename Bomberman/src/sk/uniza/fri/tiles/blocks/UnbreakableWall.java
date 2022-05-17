@@ -29,7 +29,7 @@ public class UnbreakableWall extends TileObject  {
 
     @Override
     public void handleCollision(Explosion explosion) {
-        explosion.destroy();
+
     }
 
     @Override

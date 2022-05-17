@@ -1,5 +1,6 @@
 package sk.uniza.fri.tiles.blocks;
 
+import sk.uniza.fri.Map;
 import sk.uniza.fri.characters.Character;
 import sk.uniza.fri.powerups.PowerUp;
 import sk.uniza.fri.ResourceCollection;
@@ -13,8 +14,14 @@ import sk.uniza.fri.tiles.TileObject;
  */
 public class BreakableWall extends TileObject {
 
+    private int row;
+    private int column;
+
     public BreakableWall(int row, int column) {
         super(ResourceCollection.Textures.BREAKABLE_WALL.getTexture(), row, column);
+
+        this.row = row;
+        this.column = column;
     }
 
     @Override
@@ -29,11 +36,15 @@ public class BreakableWall extends TileObject {
 
     @Override
     public void handleCollision(Explosion explosion) {
-
+        this.destroy();
+        explosion.setTexture(ResourceCollection.Textures.EXPLOSION_END_BIG.getTexture());
+        explosion.setExplosionsLeft(0);
+//        explosion.setRotation();
     }
 
     @Override
     public void destroy() {
-        this.setTexture(ResourceCollection.Textures.EMPTY.getTexture());
+        this.hideTexture();
+        Map.getMap().setTileObject(new Empty(this.row, this.column));
     }
 }

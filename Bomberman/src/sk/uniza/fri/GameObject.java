@@ -60,5 +60,9 @@ public abstract class GameObject {
         this.texture.zobraz();
     }
 
+    public void hideTexture() {
+        this.texture.skry();
+    }
+
     public abstract void destroy();
 }

@@ -7,6 +7,7 @@ import sk.uniza.fri.Manazer;
 import sk.uniza.fri.Map;
 import sk.uniza.fri.powerups.PowerUp;
 import sk.uniza.fri.ResourceCollection;
+import sk.uniza.fri.tiles.blocks.Empty;
 
 /**
  * 27. 4. 2022 - 23:03
@@ -18,10 +19,13 @@ public class Bomb extends TileObject {
     private static final int TIME_TO_EXPLOSION = 10;
 
     private Bomber owner;
-    private Manazer manazer;
+    private int bombRadius;
+
+    private int row;
+    private int column;
 
     private int tickCount;
-    private int bombRadius;
+    private Manazer manazer;
 
     public Bomb(Bomber owner, int bombRadius, int row, int column) {
         super(ResourceCollection.Textures.BOMB.getTexture(), row, column);
@@ -29,11 +33,14 @@ public class Bomb extends TileObject {
         Map.getMap().setTileObject(this);
 
         this.owner = owner;
-        this.manazer = new Manazer();
-        this.manazer.spravujObjekt(this);
+        this.bombRadius = bombRadius;
+
+        this.row = row;
+        this.column = column;
 
         this.tickCount = 0;
-        this.bombRadius = bombRadius;
+        this.manazer = new Manazer();
+        this.manazer.spravujObjekt(this);
     }
 
     public void tik() {
@@ -45,19 +52,21 @@ public class Bomb extends TileObject {
 
     public void explode() {
         this.destroy();
+
         this.owner.addBomb();
         Map.getMap().setTileObject(new Explosion(ResourceCollection.Textures.EXPLOSION_START_BIG.getTexture(), this.getRow(), this.getColumn(), Direction.NONE, this.bombRadius));
-        this.manazer.prestanSpravovatObjekt(this);
     }
 
     @Override
     public void destroy() {
-
+        this.hideTexture();
+        this.manazer.prestanSpravovatObjekt(this);
+        Map.getMap().setTileObject(new Empty(this.row, this.column));
     }
 
     @Override
     public void handleCollision(Character character) {
-        character.takeLife();
+
     }
 
     @Override
