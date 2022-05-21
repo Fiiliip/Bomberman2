@@ -1,7 +1,7 @@
 package sk.uniza.fri.tiles;
 
 import sk.uniza.fri.characters.Bomber;
-import sk.uniza.fri.characters.Character;
+import sk.uniza.fri.characters.Mob;
 import sk.uniza.fri.characters.Direction;
 import sk.uniza.fri.Manazer;
 import sk.uniza.fri.Map;
@@ -21,22 +21,17 @@ public class Bomb extends TileObject {
     private Bomber owner;
     private int bombRadius;
 
-    private int row;
-    private int column;
-
     private int tickCount;
     private Manazer manazer;
 
     public Bomb(Bomber owner, int bombRadius, int row, int column) {
         super(ResourceCollection.Textures.BOMB.getTexture(), row, column);
-
-        Map.getMap().setTileObject(this);
+        this.isWalkable = false;
 
         this.owner = owner;
         this.bombRadius = bombRadius;
 
-        this.row = row;
-        this.column = column;
+        Map.getMap().setTileObject(this);
 
         this.tickCount = 0;
         this.manazer = new Manazer();
@@ -52,9 +47,9 @@ public class Bomb extends TileObject {
 
     public void explode() {
         this.destroy();
-
         this.owner.addBomb();
-        Map.getMap().setTileObject(new Explosion(ResourceCollection.Textures.EXPLOSION_START_BIG.getTexture(), this.getRow(), this.getColumn(), Direction.NONE, this.bombRadius));
+//        Map.getMap().setTileObject(new Explosion(ResourceCollection.Textures.EXPLOSION_START_BIG.getTexture(), this.row, this.column, Direction.NONE, this.bombRadius));
+        Map.getMap().setTileObject(new Explosion(Direction.NONE, this.row, this.column, this.bombRadius));
     }
 
     @Override
@@ -65,7 +60,7 @@ public class Bomb extends TileObject {
     }
 
     @Override
-    public void handleCollision(Character character) {
+    public void handleCollision(Mob character) {
 
     }
 
