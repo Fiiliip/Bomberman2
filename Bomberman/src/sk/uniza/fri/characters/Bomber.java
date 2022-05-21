@@ -1,6 +1,5 @@
 package sk.uniza.fri.characters;
 
-import sk.uniza.fri.Manazer;
 import sk.uniza.fri.Map;
 import sk.uniza.fri.ResourceCollection;
 import sk.uniza.fri.tiles.Bomb;
@@ -10,32 +9,23 @@ import sk.uniza.fri.tiles.Bomb;
  *
  * @author Fíla
  */
-public class Bomber extends Character {
-
-    private Manazer manazer;
+public class Bomber extends Mob {
 
     private int bombRadius;
-    private int bombCount;
-
     private String color;
 
     public Bomber(String color, int row, int column) {
         super(ResourceCollection.loadBufferedImage("./resources/textures/Charakter/CHARAKTER_" + color + "_" + Direction.DOWN + ".png"), row, column);
 
+        this.bombRadius = 4;
         this.color = color;
 
         this.setNumberOfLives(3);
-
-        this.manazer = new Manazer();
-        this.manazer.spravujObjekt(this);
-
-        this.bombRadius = 3;
-        this.bombCount = 1;
+        this.setCountOfSpecialAbility(1);
     }
 
-    @Override
-    public void destroy() {
-
+    public String getColor() {
+        return this.color;
     }
 
     @Override
@@ -64,17 +54,18 @@ public class Bomber extends Character {
 
     @Override
     public void action() {
-        if (this.bombCount <= 0) {
+        if (this.getCountOfSpecialAbility() <= 0) {
             return;
         }
 
         Map.getMap().setTileObject(new Bomb(this, this.bombRadius, this.getRow(), this.getColumn()));
-        this.bombCount--;
+        this.setCountOfSpecialAbility(this.getCountOfSpecialAbility() - 1);
         this.showTexture();
-        // TODO: HUD aktualizuj hodnoty
+        this.getMobHUD().updateValues();
     }
 
     public void addBomb() {
-        this.bombCount++;
+        this.setCountOfSpecialAbility(this.getCountOfSpecialAbility() + 1);
+        this.getMobHUD().updateValues();
     }
 }
