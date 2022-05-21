@@ -59,6 +59,10 @@ public class Obrazok {
         this.posunZvisle(-(y));
     }
 
+    public BufferedImage getImage() {
+        return this.obrazok;
+    }
+
     /**
      * Vráti nám pozíciu ľavého horneho X obrázka.
      * @return pozícia ľavého horného X obrázka
