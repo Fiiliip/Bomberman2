@@ -1,5 +1,6 @@
 package sk.uniza.fri;
 
+import sk.uniza.fri.characters.Mob;
 import sk.uniza.fri.tiles.blocks.BreakableWall;
 import sk.uniza.fri.tiles.blocks.Empty;
 import sk.uniza.fri.tiles.blocks.UnbreakableWall;
@@ -25,6 +26,7 @@ public class Map {
     private int height;
 
     private TileObject[][] tileObjects;
+    private Mob[][] mobs;
 
     public Map() {
         map = this;
@@ -38,6 +40,8 @@ public class Map {
     public Map(String fileWithMap) {
         this();
         this.loadFromFile(fileWithMap);
+
+        this.mobs = new Mob[this.height][this.width];
     }
 
     public static Map getMap() {
@@ -50,6 +54,18 @@ public class Map {
 
     public void setTileObject(TileObject tileObject) {
         this.tileObjects[tileObject.getRow()][tileObject.getColumn()] = tileObject;
+    }
+
+    public Mob[][] getMobs() {
+        return this.mobs;
+    }
+
+    public void setMob(Mob mob) {
+        this.mobs[mob.getRow()][mob.getColumn()] = mob;
+    }
+
+    public void setMob(Mob mob, int row, int column) {
+        this.mobs[row][column] = mob;
     }
 
     public void generate(ArrayList<ArrayList<Character>> map) {

@@ -1,6 +1,6 @@
 package sk.uniza.fri.characters.enemies;
 
-import sk.uniza.fri.characters.Character;
+import sk.uniza.fri.characters.Mob;
 import sk.uniza.fri.ResourceCollection;
 
 /**
@@ -8,7 +8,7 @@ import sk.uniza.fri.ResourceCollection;
  *
  * @author Fíla
  */
-public class Enemy extends Character {
+public class Enemy extends Mob {
 
     public Enemy(String fileWithTexture, int x, int y) {
         super(ResourceCollection.loadBufferedImage(null), x, y);
