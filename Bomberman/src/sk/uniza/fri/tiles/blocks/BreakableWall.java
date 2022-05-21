@@ -1,7 +1,8 @@
 package sk.uniza.fri.tiles.blocks;
 
+import sk.uniza.fri.Bomberman;
 import sk.uniza.fri.Map;
-import sk.uniza.fri.characters.Character;
+import sk.uniza.fri.characters.Mob;
 import sk.uniza.fri.powerups.PowerUp;
 import sk.uniza.fri.ResourceCollection;
 import sk.uniza.fri.tiles.Explosion;
@@ -14,18 +15,13 @@ import sk.uniza.fri.tiles.TileObject;
  */
 public class BreakableWall extends TileObject {
 
-    private int row;
-    private int column;
-
     public BreakableWall(int row, int column) {
         super(ResourceCollection.Textures.BREAKABLE_WALL.getTexture(), row, column);
-
-        this.row = row;
-        this.column = column;
+        this.isWalkable = false;
     }
 
     @Override
-    public void handleCollision(Character character) {
+    public void handleCollision(Mob character) {
 
     }
 
@@ -39,12 +35,12 @@ public class BreakableWall extends TileObject {
         this.destroy();
         explosion.setTexture(ResourceCollection.Textures.EXPLOSION_END_BIG.getTexture());
         explosion.setExplosionsLeft(0);
-//        explosion.setRotation();
     }
 
     @Override
     public void destroy() {
         this.hideTexture();
         Map.getMap().setTileObject(new Empty(this.row, this.column));
+        Bomberman.getBomberman().generatePowerUpAt(this.row, this.column);
     }
 }
