@@ -1,5 +1,6 @@
 package sk.uniza.fri.powerups;
 
+import sk.uniza.fri.characters.Mob;
 import sk.uniza.fri.tiles.TileObject;
 
 import java.awt.image.BufferedImage;
@@ -11,7 +12,10 @@ import java.awt.image.BufferedImage;
  */
 public abstract class PowerUp extends TileObject {
 
-    public PowerUp(BufferedImage texture, int x, int y) {
-        super(texture, x, y);
+    public PowerUp(BufferedImage texture, int row, int column) {
+        super(texture, row, column);
+        this.isWalkable = true;
     }
+
+    public abstract void activate(Mob mob);
 }
