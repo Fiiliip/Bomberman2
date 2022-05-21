@@ -1,6 +1,6 @@
 package sk.uniza.fri.tiles.blocks;
 
-import sk.uniza.fri.characters.Character;
+import sk.uniza.fri.characters.Mob;
 import sk.uniza.fri.powerups.PowerUp;
 import sk.uniza.fri.ResourceCollection;
 import sk.uniza.fri.tiles.Explosion;
@@ -15,10 +15,11 @@ public class UnbreakableWall extends TileObject  {
 
     public UnbreakableWall(int row, int column) {
         super(ResourceCollection.Textures.UNBREAKABLE_WALL.getTexture(), row, column);
+        this.isWalkable = false;
     }
 
     @Override
-    public void handleCollision(Character character) {
+    public void handleCollision(Mob character) {
 
     }
 
