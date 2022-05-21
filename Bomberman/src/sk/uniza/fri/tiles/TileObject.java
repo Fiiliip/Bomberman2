@@ -1,5 +1,6 @@
 package sk.uniza.fri.tiles;
 
+import sk.uniza.fri.characters.Bomber;
 import sk.uniza.fri.characters.Mob;
 import sk.uniza.fri.GameObject;
 import sk.uniza.fri.powerups.PowerUp;
@@ -28,6 +29,7 @@ public abstract class TileObject extends GameObject {
     }
 
     public abstract void handleCollision(Mob mob);
+    public abstract void handleCollision(Bomber bomber);
     public abstract void handleCollision(PowerUp powerUp);
     public abstract void handleCollision(Explosion explosion);
 }

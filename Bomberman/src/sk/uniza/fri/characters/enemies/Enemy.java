@@ -15,8 +15,8 @@ public class Enemy extends Mob {
     }
 
     @Override
-    public void destroy() {
-
+    public int getCountOfSpecialAbility() {
+        return 0;
     }
 
     @Override
@@ -41,6 +41,11 @@ public class Enemy extends Mob {
 
     @Override
     public void action() {
+
+    }
+
+    @Override
+    public void destroy() {
 
     }
 }

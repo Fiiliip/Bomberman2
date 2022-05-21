@@ -9,7 +9,6 @@ public class Minvo extends Enemy {
 
     public Minvo(String fileWithTexture, int x, int y) {
         super(fileWithTexture, x, y);
-
-        this.setNumberOfLives(1);
+        this.numberOfLives = 1;
     }
 }

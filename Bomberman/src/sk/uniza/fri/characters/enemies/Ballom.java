@@ -9,13 +9,7 @@ public class Ballom extends Enemy {
 
     public Ballom(String fileWithTexture, int x, int y) {
         super(fileWithTexture, x, y);
-
-        this.setNumberOfLives(1);
-    }
-
-    @Override
-    public void destroy() {
-
+        this.numberOfLives = 1;
     }
 
     @Override
@@ -40,6 +34,11 @@ public class Ballom extends Enemy {
 
     @Override
     public void action() {
+
+    }
+
+    @Override
+    public void destroy() {
 
     }
 }

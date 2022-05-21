@@ -5,10 +5,6 @@ import sk.uniza.fri.Manazer;
 import sk.uniza.fri.Map;
 import sk.uniza.fri.MobController;
 import sk.uniza.fri.gui.MobHUD;
-import sk.uniza.fri.tiles.blocks.BreakableWall;
-import sk.uniza.fri.tiles.blocks.UnbreakableWall;
-import sk.uniza.fri.tiles.Bomb;
-import sk.uniza.fri.tiles.TileObject;
 
 import java.awt.image.BufferedImage;
 
@@ -21,13 +17,11 @@ public abstract class Mob extends GameObject {
 
     private static final int TIME_FOR_IMMUNITY = 10;
 
-    private int countOfSpecialAbility;
-
-    private int numberOfLives;
+    protected int numberOfLives;
     private boolean isImmune;
 
-    private Manazer manazer;
     private int tickCount;
+    private Manazer manazer;
 
     private MobController controller;
 
@@ -53,18 +47,6 @@ public abstract class Mob extends GameObject {
         }
     }
 
-    public void setCountOfSpecialAbility(int countOfSpecialAbility) {
-        this.countOfSpecialAbility = countOfSpecialAbility;
-    }
-
-    public int getCountOfSpecialAbility() {
-        return this.countOfSpecialAbility;
-    }
-
-    public void setNumberOfLives(int numberOfLives) {
-        this.numberOfLives = numberOfLives;
-    }
-
     public int getNumberOfLives() {
         return this.numberOfLives;
     }
@@ -86,17 +68,14 @@ public abstract class Mob extends GameObject {
         int newRow = this.row + direction.getRow();
         int newColumn = this.column + direction.getColumn();
 
+
         // Skontrolujem, či blok, na ktorý chcem ísť je "kráčateľný", teda či sa na neho dá ísť.
-        TileObject[][] tileObjects = Map.getMap().getTileObjects();
-//        if (tileObjects[newRow][newColumn] instanceof BreakableWall || tileObjects[newRow][newColumn] instanceof UnbreakableWall || tileObjects[newRow][newColumn] instanceof Bomb) {
-//            return;
-//        }
-        if (!tileObjects[newRow][newColumn].isWalkable()) {
+        if (!Map.getMap().getTileObjects()[newRow][newColumn].isWalkable()) {
             return;
         }
 
         this.setPosition(newRow, newColumn); // Nastavím novú pozíciu.
-        tileObjects[newRow][newColumn].handleCollision(this); // Blok, na ktorý som sa nastavil spracuje kolíziu s mobom.
+//        Map.getMap().getTileObjects()[newRow][newColumn].handleCollision(this); // Blok na ktorý som sa nastavil spracuje kolíziu s mobom.k,
         Map.getMap().setMob(this); // Nastavím moba na novú pozíciu na mape.
     }
 
@@ -127,6 +106,14 @@ public abstract class Mob extends GameObject {
         }
     }
 
+    public abstract int getCountOfSpecialAbility();
+
+    public abstract void moveUp();
+    public abstract void moveDown();
+    public abstract void moveLeft();
+    public abstract void moveRight();
+    public abstract void action();
+
     @Override
     public void destroy() {
         this.hideTexture();
@@ -135,10 +122,4 @@ public abstract class Mob extends GameObject {
             this.controller.remove();
         }
     }
-
-    public abstract void moveUp();
-    public abstract void moveDown();
-    public abstract void moveLeft();
-    public abstract void moveRight();
-    public abstract void action();
 }

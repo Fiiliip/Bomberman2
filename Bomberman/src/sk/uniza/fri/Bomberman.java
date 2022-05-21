@@ -4,7 +4,7 @@ import sk.uniza.fri.characters.Bomber;
 import sk.uniza.fri.characters.Mob;
 import sk.uniza.fri.gui.MobHUD;
 import sk.uniza.fri.gui.Obrazok;
-import sk.uniza.fri.powerups.BombUp;
+import sk.uniza.fri.powerups.PowerUp;
 import sk.uniza.fri.tiles.blocks.BreakableWall;
 import sk.uniza.fri.tiles.blocks.Empty;
 
@@ -92,7 +92,7 @@ public class Bomberman {
     public void generatePowerUpAt(int row, int column) {
         Random random = new Random();
         if (random.nextFloat() <= CHANCE_FOR_POWERUP) {
-            Map.getMap().setTileObject(new BombUp(ResourceCollection.Textures.ADD_BOMB.getTexture(), row, column));
+            Map.getMap().setTileObject(new PowerUp(row, column));
         }
     }
 }

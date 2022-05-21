@@ -2,6 +2,7 @@ package sk.uniza.fri.tiles.blocks;
 
 import sk.uniza.fri.Bomberman;
 import sk.uniza.fri.Map;
+import sk.uniza.fri.characters.Bomber;
 import sk.uniza.fri.characters.Mob;
 import sk.uniza.fri.powerups.PowerUp;
 import sk.uniza.fri.ResourceCollection;
@@ -22,6 +23,11 @@ public class BreakableWall extends TileObject {
 
     @Override
     public void handleCollision(Mob character) {
+
+    }
+
+    @Override
+    public void handleCollision(Bomber bomber) {
 
     }
 
