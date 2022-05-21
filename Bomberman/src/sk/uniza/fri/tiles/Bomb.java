@@ -48,19 +48,17 @@ public class Bomb extends TileObject {
     public void explode() {
         this.destroy();
         this.owner.addBomb();
-//        Map.getMap().setTileObject(new Explosion(ResourceCollection.Textures.EXPLOSION_START_BIG.getTexture(), this.row, this.column, Direction.NONE, this.bombRadius));
+        Map.getMap().setTileObject(new Marker(this, this.row, this.column));
         Map.getMap().setTileObject(new Explosion(Direction.NONE, this.row, this.column, this.bombRadius));
     }
 
     @Override
-    public void destroy() {
-        this.hideTexture();
-        this.manazer.prestanSpravovatObjekt(this);
-        Map.getMap().setTileObject(new Empty(this.row, this.column));
+    public void handleCollision(Mob character) {
+
     }
 
     @Override
-    public void handleCollision(Mob character) {
+    public void handleCollision(Bomber bomber) {
 
     }
 
@@ -71,6 +69,13 @@ public class Bomb extends TileObject {
 
     @Override
     public void handleCollision(Explosion explosion) {
+        this.explode();
+    }
 
+    @Override
+    public void destroy() {
+        this.hideTexture();
+        this.manazer.prestanSpravovatObjekt(this);
+        Map.getMap().setTileObject(new Empty(this.row, this.column));
     }
 }

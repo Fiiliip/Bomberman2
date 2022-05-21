@@ -2,6 +2,7 @@ package sk.uniza.fri.tiles;
 
 import sk.uniza.fri.Bomberman;
 import sk.uniza.fri.Manazer;
+import sk.uniza.fri.characters.Bomber;
 import sk.uniza.fri.characters.Mob;
 import sk.uniza.fri.characters.Direction;
 import sk.uniza.fri.Map;
@@ -38,7 +39,7 @@ public class Explosion extends TileObject {
 
         Bomberman.getBomberman().takeMobsLivesAt(this.row, this.column);
 
-         Map.getMap().getTileObjects()[this.row][this.column].handleCollision(this);
+        Map.getMap().getTileObjects()[this.row][this.column].handleCollision(this);
         // Ak na tomto Tile existuje už explózia, tak si zoberiem jej originálny Tile, ktorý pri zničení tejto explózie vrátim späť.
         if (Map.getMap().getTileObjects()[this.row][this.column] instanceof Explosion) {
             this.originalTileObject = ((Explosion)Map.getMap().getTileObjects()[this.row][this.column]).originalTileObject;
@@ -61,10 +62,6 @@ public class Explosion extends TileObject {
         if (this.tickCount >= TIME_FOR_EXPLOSION) {
             this.destroy();
         }
-    }
-
-    public int getTickCount() {
-        return this.tickCount;
     }
 
     public void createNextExplosion() {
@@ -126,12 +123,45 @@ public class Explosion extends TileObject {
     }
 
     @Override
+    public void handleCollision(Bomber bomber) {
+        bomber.takeLife();
+    }
+
+    @Override
     public void handleCollision(PowerUp powerUp) {
     }
 
     @Override
     public void handleCollision(Explosion explosion) {
-        this.setTexture(ResourceCollection.Textures.EXPLOSION_START_BIG.getTexture());
+        if ((explosion.direction == Direction.LEFT || explosion.direction == Direction.RIGHT) && (this.direction == Direction.LEFT || this.direction == Direction.RIGHT)) {
+            if (this.originalTileObject instanceof Marker marker) {
+                if (marker.getMarkedTile() instanceof Bomb) {
+                    this.setTexture(ResourceCollection.Textures.EXPLOSION_START_BIG.getTexture());
+                    return;
+                }
+            }
+
+            if (Map.getMap().getTileObjects()[this.row + explosion.direction.getRow()][this.column + explosion.direction.getColumn()] instanceof UnbreakableWall) {
+                this.setTexture(ResourceCollection.Textures.EXPLOSION_END_BIG.getTexture());
+            } else {
+                this.setTexture(ResourceCollection.Textures.EXPLOSION_MIDDLE_BIG.getTexture());
+            }
+        } else if ((explosion.direction == Direction.UP || explosion.direction == Direction.DOWN) && (this.direction == Direction.UP || this.direction == Direction.DOWN)) {
+            if (this.originalTileObject instanceof Marker marker) {
+                if (marker.getMarkedTile() instanceof Bomb) {
+                    this.setTexture(ResourceCollection.Textures.EXPLOSION_START_BIG.getTexture());
+                    return;
+                }
+            }
+
+            if (Map.getMap().getTileObjects()[this.row + explosion.direction.getRow()][this.column + explosion.direction.getColumn()] instanceof UnbreakableWall) {
+                this.setTexture(ResourceCollection.Textures.EXPLOSION_END_BIG.getTexture());
+            } else {
+                this.setTexture(ResourceCollection.Textures.EXPLOSION_MIDDLE_BIG.getTexture());
+            }
+        } else {
+            this.setTexture(ResourceCollection.Textures.EXPLOSION_START_BIG.getTexture());
+        }
     }
 
     @Override
@@ -142,7 +172,7 @@ public class Explosion extends TileObject {
 
         // Skontrolujem, či medzitým tu neprišla nová explózia. Ak áno, tak túto aktuálnu explóziu iba zničím a nezobrazím namiesto nej iný Tile.
         if (Map.getMap().getTileObjects()[this.row][this.column] == this) {
-            if (this.originalTileObject == null) {
+            if (this.originalTileObject == null || this.originalTileObject instanceof Marker) {
                 Map.getMap().setTileObject(new Empty(this.row, this.column));
             } else {
                 Map.getMap().setTileObject(this.originalTileObject);
