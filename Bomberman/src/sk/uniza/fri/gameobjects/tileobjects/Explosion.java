@@ -1,20 +1,19 @@
-package sk.uniza.fri.tiles;
+package sk.uniza.fri.gameobjects.tileobjects;
 
 import sk.uniza.fri.Bomberman;
 import sk.uniza.fri.Manazer;
-import sk.uniza.fri.characters.Bomber;
-import sk.uniza.fri.characters.Mob;
-import sk.uniza.fri.characters.Direction;
+import sk.uniza.fri.gameobjects.characters.Bomber;
+import sk.uniza.fri.gameobjects.characters.Mob;
+import sk.uniza.fri.gameobjects.characters.Direction;
 import sk.uniza.fri.Map;
-import sk.uniza.fri.powerups.PowerUp;
-import sk.uniza.fri.ResourceCollection;
-import sk.uniza.fri.tiles.blocks.Empty;
-import sk.uniza.fri.tiles.blocks.UnbreakableWall;
+import sk.uniza.fri.gui.ResourceCollection;
+import sk.uniza.fri.gameobjects.tileobjects.blocks.Empty;
+import sk.uniza.fri.gameobjects.tileobjects.blocks.UnbreakableWall;
 
 /**
- * 27. 4. 2022 - 23:03
+ * Class, that manages logic of Explosion.
  *
- * @author Fíla
+ * @author Fiiliip (https://github.com/Fiiliip)
  */
 public class Explosion extends TileObject {
 
@@ -28,6 +27,13 @@ public class Explosion extends TileObject {
     private int tickCount;
     private Manazer manazer;
 
+    /**
+     * Creates new explosion with given parameters.
+     * @param direction to which explosion must expand
+     * @param row position
+     * @param column position
+     * @param explosionsLeft count of how many explosions is left
+     */
     public Explosion(Direction direction, int row, int column, int explosionsLeft) {
         super(row, column);
         this.isWalkable = true;
@@ -57,6 +63,9 @@ public class Explosion extends TileObject {
         this.manazer.spravujObjekt(this);
     }
 
+    /**
+     * Method, which is called every x (set in class Manazer, current 0.25 seconds) nanosecond by Manazer.
+     */
     public void tik() {
         this.tickCount++;
         if (this.tickCount >= TIME_FOR_EXPLOSION) {
@@ -64,6 +73,9 @@ public class Explosion extends TileObject {
         }
     }
 
+    /**
+     * Creates new explosion based on this current explosion parameters.
+     */
     public void createNextExplosion() {
         if (this.direction != Direction.NONE) {
             new Explosion(this.direction, this.row + this.direction.getRow(), this.column + this.direction.getColumn(), this.explosionsLeft);
@@ -86,6 +98,9 @@ public class Explosion extends TileObject {
         }
     }
 
+    /**
+     * Sets texture and rotation based on current parameters.
+     */
     public void setTextureAndRotation() {
         if (this.direction == Direction.NONE) {
             this.setTexture(ResourceCollection.Textures.EXPLOSION_START_BIG.getTexture());
@@ -113,24 +128,36 @@ public class Explosion extends TileObject {
         }
     }
 
+    /**
+     * Sets how many explosions left.
+     * @param explosionsLeft
+     */
     public void setExplosionsLeft(int explosionsLeft) {
         this.explosionsLeft = explosionsLeft;
     }
 
+    /**
+     * Takes mob life if in collision with it.
+     * @param mob colliding mob
+     */
     @Override
     public void handleCollision(Mob mob) {
         mob.takeLife();
     }
 
+    /**
+     * Takes bomber life if in collision with it.
+     * @param bomber colliding bomber
+     */
     @Override
     public void handleCollision(Bomber bomber) {
         bomber.takeLife();
     }
 
-    @Override
-    public void handleCollision(PowerUp powerUp) {
-    }
-
+    /**
+     * Sets new explosion texture if in collision with it.
+     * @param explosion colliding explosion
+     */
     @Override
     public void handleCollision(Explosion explosion) {
         if ((explosion.direction == Direction.LEFT || explosion.direction == Direction.RIGHT) && (this.direction == Direction.LEFT || this.direction == Direction.RIGHT)) {
@@ -164,6 +191,9 @@ public class Explosion extends TileObject {
         }
     }
 
+    /**
+     * Destroys explosion and creates at this tile tile, which was there before explosion or if there was not any, creates new empty tile.
+     */
     @Override
     public void destroy() {
         this.hideTexture();

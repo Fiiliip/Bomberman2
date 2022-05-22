@@ -1,26 +1,35 @@
-package sk.uniza.fri.tiles;
+package sk.uniza.fri.gameobjects.tileobjects;
 
 import sk.uniza.fri.Map;
-import sk.uniza.fri.characters.Bomber;
-import sk.uniza.fri.characters.Mob;
-import sk.uniza.fri.powerups.PowerUp;
-import sk.uniza.fri.tiles.blocks.Empty;
+import sk.uniza.fri.gameobjects.characters.Bomber;
+import sk.uniza.fri.gameobjects.characters.Mob;
+import sk.uniza.fri.gameobjects.tileobjects.blocks.Empty;
 
 /**
- * 27. 4. 2022 - 23:03
+ * Class for Marker logic. Marker is object, that marks specific tile with tile stored in markedTile.
  *
- * @author Fíla
+ * @author Fiiliip (https://github.com/Fiiliip)
  */
 public class Marker extends TileObject {
 
     private TileObject markedTile;
 
+    /**
+     * Creates new Marker at given position, with given parameters.
+     * @param tileObject tile, that is marked
+     * @param row position Y
+     * @param column position X
+     */
     public Marker(TileObject tileObject, int row, int column) {
         super(row, column);
         this.isWalkable = true;
         this.markedTile = tileObject;
     }
 
+    /**
+     * Return marked tile.
+     * @return marked tile
+     */
     public TileObject getMarkedTile() {
         return this.markedTile;
     }
@@ -36,15 +45,13 @@ public class Marker extends TileObject {
     }
 
     @Override
-    public void handleCollision(PowerUp powerUp) {
-
-    }
-
-    @Override
     public void handleCollision(Explosion explosion) {
 
     }
 
+    /**
+     * Destroys marker and sets empty tile at current position.
+     */
     @Override
     public void destroy() {
         this.hideTexture();

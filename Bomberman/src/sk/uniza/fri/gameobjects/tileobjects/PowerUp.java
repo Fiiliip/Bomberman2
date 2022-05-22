@@ -1,23 +1,24 @@
-package sk.uniza.fri.powerups;
+package sk.uniza.fri.gameobjects.tileobjects;
 
 import sk.uniza.fri.Map;
-import sk.uniza.fri.ResourceCollection;
-import sk.uniza.fri.characters.Bomber;
-import sk.uniza.fri.characters.Mob;
-import sk.uniza.fri.tiles.Explosion;
-import sk.uniza.fri.tiles.TileObject;
-import sk.uniza.fri.tiles.blocks.Empty;
+import sk.uniza.fri.gui.ResourceCollection;
+import sk.uniza.fri.gameobjects.characters.Bomber;
+import sk.uniza.fri.gameobjects.characters.Mob;
+import sk.uniza.fri.gameobjects.tileobjects.blocks.Empty;
 
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
 /**
- * 27. 4. 2022 - 23:03
+ * Class for power up logic.
  *
- * @author Fíla
+ * @author Fiiliip (https://github.com/Fiiliip)
  */
 public class PowerUp extends TileObject {
 
+    /**
+     * Enum for power ups types.
+     */
     public enum Type {
         INCREASE_EXPLOSION(ResourceCollection.Textures.INCREASE_EXPLOSION) {
             @Override
@@ -32,12 +33,20 @@ public class PowerUp extends TileObject {
             }
         };
 
-        private BufferedImage texture;
+        private final BufferedImage texture;
 
+        /**
+         * Creates power up with given texture.
+         * @param texture of power up
+         */
         Type(ResourceCollection.Textures texture) {
             this.texture = texture.getTexture();
         }
 
+        /**
+         * Returns power up texture.
+         * @return texture
+         */
         public BufferedImage getTexture() {
             return this.texture;
         }
@@ -47,6 +56,11 @@ public class PowerUp extends TileObject {
 
     private Type type;
 
+    /**
+     * Creates new power up at given coordinates.
+     * @param row positionY
+     * @param column positionX
+     */
     public PowerUp(int row, int column) {
         super(row, column);
         this.isWalkable = true;
@@ -54,27 +68,37 @@ public class PowerUp extends TileObject {
         this.setTexture(this.type.getTexture());
     }
 
+    /**
+     * Generates random power up from enum of power up types.
+     */
     public void generateRandom() {
         Random random = new Random();
         this.type = Type.values()[random.nextInt((Type.values().length))];
     }
 
+    /**
+     * Destroys power up, if in collision with mob.
+     * @param mob colliding mob
+     */
     @Override
     public void handleCollision(Mob mob) {
         this.destroy();
     }
 
+    /**
+     * Destroys and activates power up, if in collision with bomber.
+     * @param bomber colliding bomber
+     */
     @Override
     public void handleCollision(Bomber bomber) {
         this.destroy();
         this.type.activate(bomber);
     }
 
-    @Override
-    public void handleCollision(PowerUp powerUp) {
-
-    }
-
+    /**
+     * Destroys and sets at current tile explosion, if in collision with explosion.
+     * @param explosion colliding explosion
+     */
     @Override
     public void handleCollision(Explosion explosion) {
         this.destroy();
@@ -83,6 +107,9 @@ public class PowerUp extends TileObject {
         explosion.showTexture();
     }
 
+    /**
+     * Destroys current power up and creates empty tile at current position.
+     */
     @Override
     public void destroy() {
         this.hideTexture();

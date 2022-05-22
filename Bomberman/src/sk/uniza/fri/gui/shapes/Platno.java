@@ -1,4 +1,4 @@
-package sk.uniza.fri.gui;
+package sk.uniza.fri.gui.shapes;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -20,6 +20,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 /**
+ * Prevzatá trieda od FRI - UNIZA a trochu poupravená pre používanie v semestrálnej práci.
+ *
  * Canvas is a class to allow for simple graphical drawing on a canvas.
  * This is a modification of the general purpose Canvas, specially made for
  * the BlueJ "shapes" example. 

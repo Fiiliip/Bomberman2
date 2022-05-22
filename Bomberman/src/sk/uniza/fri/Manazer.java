@@ -1,6 +1,6 @@
 package sk.uniza.fri;
 
-import sk.uniza.fri.gui.Platno;
+import sk.uniza.fri.gui.shapes.Platno;
 
 import java.util.ArrayList;
 import java.awt.event.KeyAdapter;
@@ -14,6 +14,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 
 /**
+ * Prevzatá trieda od FRI - UNIZA a trochu poupravená pre používanie v semestrálnej práci.
+ *
  * Automaticky posiela spravy danym objektom:<br />
  * posunDole() - pri stlaceni klavesy DOWN<br />
  * posunHore() - pri stlaceni klavesy UP<br />

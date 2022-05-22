@@ -1,21 +1,25 @@
-package sk.uniza.fri.tiles.blocks;
+package sk.uniza.fri.gameobjects.tileobjects.blocks;
 
 import sk.uniza.fri.Bomberman;
 import sk.uniza.fri.Map;
-import sk.uniza.fri.characters.Bomber;
-import sk.uniza.fri.characters.Mob;
-import sk.uniza.fri.powerups.PowerUp;
-import sk.uniza.fri.ResourceCollection;
-import sk.uniza.fri.tiles.Explosion;
-import sk.uniza.fri.tiles.TileObject;
+import sk.uniza.fri.gameobjects.characters.Bomber;
+import sk.uniza.fri.gameobjects.characters.Mob;
+import sk.uniza.fri.gameobjects.tileobjects.Explosion;
+import sk.uniza.fri.gameobjects.tileobjects.TileObject;
+import sk.uniza.fri.gui.ResourceCollection;
 
 /**
- * 27. 4. 2022 - 23:03
+ * Class for BreakableWall tile.
  *
- * @author Fíla
+ * @author Fiiliip (https://github.com/Fiiliip)
  */
 public class BreakableWall extends TileObject {
 
+    /**
+     * Creates new breakable wall at given location.
+     * @param row at which to create this object
+     * @param column at which to create this object
+     */
     public BreakableWall(int row, int column) {
         super(ResourceCollection.Textures.BREAKABLE_WALL.getTexture(), row, column);
         this.isWalkable = false;
@@ -31,11 +35,10 @@ public class BreakableWall extends TileObject {
 
     }
 
-    @Override
-    public void handleCollision(PowerUp powerUp) {
-
-    }
-
+    /**
+     * Destroys current breakable wall and ends current direction of explosion.
+     * @param explosion which collides
+     */
     @Override
     public void handleCollision(Explosion explosion) {
         this.destroy();
@@ -43,6 +46,9 @@ public class BreakableWall extends TileObject {
         explosion.setExplosionsLeft(0);
     }
 
+    /**
+     * Destroys current breakable wall and creates new empty tile at current location.
+     */
     @Override
     public void destroy() {
         this.hideTexture();

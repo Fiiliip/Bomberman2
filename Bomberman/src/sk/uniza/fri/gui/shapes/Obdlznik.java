@@ -1,8 +1,10 @@
-package sk.uniza.fri.gui;
+package sk.uniza.fri.gui.shapes;
 
 import java.awt.Rectangle;
 
 /**
+ * Prevzatá trieda od FRI - UNIZA.
+ *
  * Obdĺžnik, s ktorým možno pohybovať a nakreslí sa na plátno.
  * 
  * @author  Michael Kolling and David J. Barnes

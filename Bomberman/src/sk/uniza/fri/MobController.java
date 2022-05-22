@@ -1,15 +1,16 @@
 package sk.uniza.fri;
 
-import sk.uniza.fri.characters.Mob;
-import sk.uniza.fri.gui.Platno;
+import sk.uniza.fri.gameobjects.characters.Mob;
+import sk.uniza.fri.gui.shapes.Platno;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.HashMap;
 
 /**
- * 27. 4. 2022 - 23:03
+ * Class that manages player control.
  *
- * @author Fíla
+ * @author Fiiliip (https://github.com/Fiiliip)
  */
 public class MobController implements KeyListener {
 
@@ -21,8 +22,26 @@ public class MobController implements KeyListener {
     private int right;
     private int action;
 
+    private HashMap<Integer, Runnable> controller;
+
+    /**
+     * Creates mob controller.
+     * @param mob player object
+     * @param up key code to move up
+     * @param down key code to move down
+     * @param left key code to move left
+     * @param right key code to move right
+     * @param action key code to activate the action
+     */
     public MobController(Mob mob, int up, int down, int left, int right, int action) {
         this.mob = mob;
+
+//        this.controller = new HashMap<Integer, Runnable>();
+//        this.controller.put(up, () -> this.mob.moveUp());
+//        this.controller.put(down, () -> this.mob.moveDown());
+//        this.controller.put(left, () -> this.mob.moveLeft());
+//        this.controller.put(right, () -> this.mob.moveRight());
+//        this.controller.put(action, () -> this.mob.action());
 
         this.up = up;
         this.down = down;
@@ -34,6 +53,9 @@ public class MobController implements KeyListener {
         Platno.dajPlatno().addKeyListener(this);
     }
 
+    /**
+     * Removes current controller.
+     */
     public void remove() {
         Platno.dajPlatno().removeKyeListener(this);
     }
@@ -43,6 +65,10 @@ public class MobController implements KeyListener {
 
     }
 
+    /**
+     * Registers every pressed key and performs action corresponding to the key.
+     * @param event event
+     */
     @Override
     public void keyPressed(KeyEvent event) {
         if (event.getKeyCode() == this.up) {
@@ -56,6 +82,8 @@ public class MobController implements KeyListener {
         } else if (event.getKeyCode() == this.action) {
             this.mob.action();
         }
+
+//        this.controller.get(event.getKeyCode()).run();
     }
 
     @Override

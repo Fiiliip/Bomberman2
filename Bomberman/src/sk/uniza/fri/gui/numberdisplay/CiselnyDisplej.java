@@ -1,4 +1,4 @@
-package sk.uniza.fri.gui;
+package sk.uniza.fri.gui.numberdisplay;
 
 /**
  * Trieda, ktorá zobrazuje ľubovoľné číslo na číselnom displeji, skladajúceho sa zo segmentových znakoch v rozsahu od 0 do 99 vrátane.

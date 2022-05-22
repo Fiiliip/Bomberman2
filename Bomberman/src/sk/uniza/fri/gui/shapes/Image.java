@@ -1,4 +1,4 @@
-package sk.uniza.fri.gui;
+package sk.uniza.fri.gui.shapes;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

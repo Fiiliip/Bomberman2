@@ -1,10 +1,10 @@
 package sk.uniza.fri;
 
-import sk.uniza.fri.characters.Mob;
-import sk.uniza.fri.tiles.blocks.BreakableWall;
-import sk.uniza.fri.tiles.blocks.Empty;
-import sk.uniza.fri.tiles.blocks.UnbreakableWall;
-import sk.uniza.fri.tiles.TileObject;
+import sk.uniza.fri.gameobjects.characters.Mob;
+import sk.uniza.fri.gameobjects.tileobjects.blocks.BreakableWall;
+import sk.uniza.fri.gameobjects.tileobjects.blocks.Empty;
+import sk.uniza.fri.gameobjects.tileobjects.blocks.UnbreakableWall;
+import sk.uniza.fri.gameobjects.tileobjects.TileObject;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -12,6 +12,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Class that handles loading the map from a semicolon-separated character set (;) and its generation according to the characters being read.
+ * Characters representing individual Typees of blocks are:
+ * N - indestructible wall,
+ * Z - destructible wall,
+ * O - empty block
+ *
+ * @author Fiiliip (https://github.com/Fiiliip)
+ */
 public class Map {
 
     private static Map map;
@@ -28,15 +37,20 @@ public class Map {
     private TileObject[][] tileObjects;
     private Mob[][] mobs;
 
+    /**
+     * Creates new map.
+     */
     public Map() {
         map = this;
 
         this.width = 0;
         this.height = 0;
-
-        // TODO: vygeneruj nejaku defaultnu mapu alebo nahodnu
     }
 
+    /**
+     * Creates new map based on characters stored in file with map.
+     * @param fileWithMap path to file with map
+     */
     public Map(String fileWithMap) {
         this();
         this.loadFromFile(fileWithMap);
@@ -44,30 +58,42 @@ public class Map {
         this.mobs = new Mob[this.height][this.width];
     }
 
+    /**
+     * Returns static Map.
+     * @return map
+     */
     public static Map getMap() {
         return map;
     }
 
+    /**
+     * Returns an array with tile objects.
+     * @return array with tile objects
+     */
     public TileObject[][] getTileObjects() {
         return this.tileObjects;
     }
 
+    /**
+     * Sets tile object at tile position.
+     * @param tileObject to set to array with tile objects
+     */
     public void setTileObject(TileObject tileObject) {
         this.tileObjects[tileObject.getRow()][tileObject.getColumn()] = tileObject;
     }
 
-    public Mob[][] getMobs() {
-        return this.mobs;
-    }
-
+    /**
+     * Sets mob at mob position.
+     * @param mob to set to array with mobs
+     */
     public void setMob(Mob mob) {
         this.mobs[mob.getRow()][mob.getColumn()] = mob;
     }
 
-    public void setMob(Mob mob, int row, int column) {
-        this.mobs[row][column] = mob;
-    }
-
+    /**
+     * Generates a tile map based on the characters the ArrayList.
+     * @param map arraylist of arraylist of characters
+     */
     public void generate(ArrayList<ArrayList<Character>> map) {
         this.width = map.get(0).size();
         this.height = map.size();
@@ -96,6 +122,10 @@ public class Map {
         }
     }
 
+    /**
+     * Returns array list of array list of characters, which are loaded from map file.
+     * @param fileWithMap path to the .csv file with characters
+     */
     public void loadFromFile(String fileWithMap) {
         ArrayList<ArrayList<Character>> mapFromFile = new ArrayList<ArrayList<Character>>();
 

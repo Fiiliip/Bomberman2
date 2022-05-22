@@ -1,4 +1,6 @@
-package sk.uniza.fri.gui;
+package sk.uniza.fri.gui.numberdisplay;
+
+import sk.uniza.fri.gui.shapes.Obdlznik;
 
 /**
  * Trieda, ktorá zobrazuje ľubovoľné číslo pomocou segmentového znaku na plátne v rozsahu od 0 do 9 vrátane.

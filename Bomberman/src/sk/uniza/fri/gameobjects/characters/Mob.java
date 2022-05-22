@@ -1,6 +1,6 @@
-package sk.uniza.fri.characters;
+package sk.uniza.fri.gameobjects.characters;
 
-import sk.uniza.fri.GameObject;
+import sk.uniza.fri.gameobjects.GameObject;
 import sk.uniza.fri.Manazer;
 import sk.uniza.fri.Map;
 import sk.uniza.fri.MobController;
@@ -9,9 +9,9 @@ import sk.uniza.fri.gui.MobHUD;
 import java.awt.image.BufferedImage;
 
 /**
- * 27. 4. 2022 - 23:03
+ * Abstract class for Mobs which stores basic informations.
  *
- * @author Fíla
+ * @author Fiiliip (https://github.com/Fiiliip)
  */
 public abstract class Mob extends GameObject {
 
@@ -27,17 +27,26 @@ public abstract class Mob extends GameObject {
 
     private MobHUD mobHUD;
 
+    /**
+     * Creates new Mob with given parameters.
+     * @param texture texture of Mob
+     * @param row position Y
+     * @param column position X
+     */
     public Mob(BufferedImage texture, int row, int column) {
         super(texture, row, column);
         this.isImmune = false;
 
+        Map.getMap().setMob(this);
+
         this.manazer = new Manazer();
         this.manazer.spravujObjekt(this);
         this.tickCount = 0;
-
-        Map.getMap().setMob(this);
     }
 
+    /**
+     * Method, which is called every x (set in class Manazer, current 0.25 seconds) nanosecond by Manazer.
+     */
     public void tik() {
         this.tickCount++;
         if (this.isImmune && this.tickCount <= TIME_FOR_IMMUNITY) {
@@ -47,22 +56,42 @@ public abstract class Mob extends GameObject {
         }
     }
 
+    /**
+     * Returns current number of lives.
+     * @return number of lives
+     */
     public int getNumberOfLives() {
         return this.numberOfLives;
     }
 
+    /**
+     * Sets controller, which controls this Mob.
+     * @param controller controller with controls
+     */
     public void setMobController(MobController controller) {
         this.controller = controller;
     }
 
+    /**
+     * Sets HUD, which displays informations about this Mob.
+     * @param mobHUD to set
+     */
     public void setMobHUD(MobHUD mobHUD) {
         this.mobHUD = mobHUD;
     }
 
+    /**
+     * Returns set MobHUD.
+     * @return mobHUD to set
+     */
     public MobHUD getMobHUD() {
         return this.mobHUD;
     }
 
+    /**
+     * Moves this Mob to direction given in params, if possible.
+     * @param direction direction to move in
+     */
     public void moveTo(Direction direction) {
         // Zistím nové hodnoty pre riadok a stĺpec, na ktorý chcem ísť.
         int newRow = this.row + direction.getRow();
@@ -75,10 +104,12 @@ public abstract class Mob extends GameObject {
         }
 
         this.setPosition(newRow, newColumn); // Nastavím novú pozíciu.
-//        Map.getMap().getTileObjects()[newRow][newColumn].handleCollision(this); // Blok na ktorý som sa nastavil spracuje kolíziu s mobom.k,
         Map.getMap().setMob(this); // Nastavím moba na novú pozíciu na mape.
     }
 
+    /**
+     * Takes Mob life if not immune. If it takes last Mob life, it will destroy him.
+     */
     public void takeLife() {
         if (this.isImmune) {
             return;
@@ -94,6 +125,9 @@ public abstract class Mob extends GameObject {
         }
     }
 
+    /**
+     * Show effect for Immunity.
+     */
     public void showImmunityEffect() {
         if (this.tickCount >= TIME_FOR_IMMUNITY) {
             this.showTexture();
@@ -114,6 +148,9 @@ public abstract class Mob extends GameObject {
     public abstract void moveRight();
     public abstract void action();
 
+    /**
+     * Destroys current object.
+     */
     @Override
     public void destroy() {
         this.hideTexture();

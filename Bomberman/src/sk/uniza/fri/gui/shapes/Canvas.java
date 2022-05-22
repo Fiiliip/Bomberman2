@@ -1,8 +1,9 @@
-package sk.uniza.fri.gui;
+package sk.uniza.fri.gui.shapes;
 
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+
 
 public class Canvas {
 
@@ -28,7 +29,6 @@ public class Canvas {
 
     public void redraw() {
         this.canvas.repaint();
-        // TODO: tu mi dačo chýba, ale ešte neviem čo
     }
 
     public void draw(Object object, BufferedImage image) {

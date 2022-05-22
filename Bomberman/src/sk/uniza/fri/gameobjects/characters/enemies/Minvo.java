@@ -1,14 +1,16 @@
-package sk.uniza.fri.characters.enemies;
+package sk.uniza.fri.gameobjects.characters.enemies;
+
+import java.awt.image.BufferedImage;
 
 /**
  * 27. 4. 2022 - 23:03
  *
  * @author Fíla
  */
-public class Ballom extends Enemy {
+public class Minvo extends Enemy {
 
-    public Ballom(String fileWithTexture, int x, int y) {
-        super(fileWithTexture, x, y);
+    public Minvo(BufferedImage texture, int x, int y) {
+        super(texture, x, y);
         this.numberOfLives = 1;
     }
 

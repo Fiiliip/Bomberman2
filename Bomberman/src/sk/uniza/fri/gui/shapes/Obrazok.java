@@ -1,4 +1,4 @@
-package sk.uniza.fri.gui;
+package sk.uniza.fri.gui.shapes;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -7,6 +7,8 @@ import javax.imageio.ImageIO;
 import java.awt.geom.AffineTransform;
 
 /**
+ * Prevzatá trieda od FRI - UNIZA a trochu poupravená pre používanie v semestrálnej práci.
+ *
  * Trieda Obrazok, reprezentuje bitmapovy obrazok, ktory moze byt vykresleny na platno.
  * 
  * @author Miroslav Kvassay

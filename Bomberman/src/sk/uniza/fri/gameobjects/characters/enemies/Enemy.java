@@ -1,7 +1,8 @@
-package sk.uniza.fri.characters.enemies;
+package sk.uniza.fri.gameobjects.characters.enemies;
 
-import sk.uniza.fri.characters.Mob;
-import sk.uniza.fri.ResourceCollection;
+import sk.uniza.fri.gameobjects.characters.Mob;
+
+import java.awt.image.BufferedImage;
 
 /**
  * 27. 4. 2022 - 23:03
@@ -10,8 +11,8 @@ import sk.uniza.fri.ResourceCollection;
  */
 public class Enemy extends Mob {
 
-    public Enemy(String fileWithTexture, int x, int y) {
-        super(ResourceCollection.loadBufferedImage(null), x, y);
+    public Enemy(BufferedImage texture, int x, int y) {
+        super(texture, x, y);
     }
 
     @Override
